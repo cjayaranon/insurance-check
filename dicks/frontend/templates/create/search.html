@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-    </head>
-    <body>
-        
-    </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Branch</th>
+                    <th>Full Name</th>
+                    <th>Client ID</th>
+                    <th>Birth Date</th>
+                    <th>Age</th>
+                    <th>Age Bracket</th>
+                    <th>Batch</th>
+                    <th>Premium Paid</th>
+                    <th>Payment Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Etiam</td>
+                    <td>justo</td>
+                    <td>quisquam</td>
+                    <td>dolorem</td>
+                    <td>ipsum</td>
+                    <td>quia</td>
+                    <td>dolor</td>
+                    <td>sit</td>
+                    <td>amet</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
