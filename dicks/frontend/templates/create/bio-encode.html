@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'custom_css/encode.css' %}">
+{% endblock css %}
+{% block content %}
+{% block pagetitle %}<title>Client Details</title>{% endblock pagetitle %}
+<div class="container">
+    <div class="row">
+        <form class="" action="{% url 'post' %}" method="post">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+                {% csrf_token %}
+                <table>
+                    {{form.as_table}}
+                </table>
+                <button type="submit" class="btn btn-primary" name="next">Next</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

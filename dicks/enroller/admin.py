@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Role, Client, Branch, Designation, Credits, Agent
+from .models import *
 # Register your admin here.
 
 
@@ -33,6 +33,10 @@ class CreditsAdmin(admin.ModelAdmin):
     list_display = ['amount','owner']
     
     
+class PaymentDetailsAdmin(admin.ModelAdmin):
+    list_display = ['payor', 'encoder_branch', 'membership_branch', 'date_of_payment', 'cutoff_period', 'premium_paid', 'auth_agent', 'payment_type', 'tagging']
+    
+    
     
 admin.site.register(Role, RoleAdmin)
 admin.site.register(Client, ClientAdmin)
@@ -40,3 +44,4 @@ admin.site.register(Branch, BranchAdmin)
 admin.site.register(Designation, DesignationAdmin)
 admin.site.register(Agent, AgentAdmin)
 admin.site.register(Credits, CreditsAdmin)
+admin.site.register(PaymentDetails, PaymentDetailsAdmin)
