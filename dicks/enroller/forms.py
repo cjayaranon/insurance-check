@@ -9,6 +9,7 @@ class BioEncodeForm(ModelForm):
         model = Client
         fields = [
             'iaccs_id',
+            'membership_branch',
             'first_name',
             'middle_name',
             'last_name',

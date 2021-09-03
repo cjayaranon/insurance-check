@@ -15,7 +15,7 @@ class ClientAdmin(admin.ModelAdmin):
     
     
 class BranchAdmin(admin.ModelAdmin):
-    list_display = ['branch_name','address']
+    list_display = ['branch_name','address', 'id']
     
     
     

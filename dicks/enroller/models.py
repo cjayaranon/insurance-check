@@ -13,6 +13,15 @@ class Role(models.Model):
 
 
 
+class Branch(models.Model):
+    branch_name = models.CharField(max_length=32)
+    address = models.CharField(max_length=120)
+    
+    def __str__(self):
+        return self.branch_name
+
+
+
 class Client(models.Model):
     GENDER = (
         ('MALE', 'He/Him'),
@@ -29,6 +38,7 @@ class Client(models.Model):
         ('OTHER', 'Other')
     )
     iaccs_id = models.IntegerField(default=0)
+    membership_branch = models.ForeignKey(Branch, on_delete=models.PROTECT)
     first_name = models.CharField(max_length=32)
     middle_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
@@ -43,15 +53,6 @@ class Client(models.Model):
     
     # def __str__(self):
     #     return 'Policy: ' + self.name
-    
-    
-    
-class Branch(models.Model):
-    branch_name = models.CharField(max_length=32)
-    address = models.CharField(max_length=120)
-    
-    def __str__(self):
-        return self.branch_name
     
     
     

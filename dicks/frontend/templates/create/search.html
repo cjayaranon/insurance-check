@@ -17,17 +17,27 @@
                 </tr>
             </thead>
             <tbody>
+                {% for items in query_list %}
                 <tr>
-                    <td>Etiam</td>
-                    <td>justo</td>
-                    <td>quisquam</td>
-                    <td>dolorem</td>
-                    <td>ipsum</td>
-                    <td>quia</td>
-                    <td>dolor</td>
-                    <td>sit</td>
-                    <td>amet</td>
+                    <td>{{ items.membership_branch }}</td>
+                    <td>
+                        <a href="{% url 'pay-encode-details' %}">
+                            {{ items.last_name }}, {{ items.first_name }} {{ items.middle_name}}
+                        </a>
+                    </td>
+                    <td>{{ items.iaccs_id }}</td>
+                    <td>{{ items.birth_date }}</td>
+                    <td>TBC</td>
+                    <td>TBC</td>
+                    <td>TBQ</td>
+                    <td>TBQ</td>
+                    <td>TBQ</td>
                 </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9" class="text-center">No such client for query "{{searchtext}}"</td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

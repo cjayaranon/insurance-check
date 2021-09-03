@@ -4,8 +4,9 @@ from .forms import *
 from . import views
 
 urlpatterns = [
-    path('search/<pk>/', views.SearchView.as_view(), name='search'),
+    path('home/', views.HomeView.as_view(), name='home'),
+    path('search/<string>/', views.SearchView.as_view(), name='search'),
     path('bio-encode/', views.BioEncodeView.as_view(), name='encode'),
-    path('payment-details/', views.PaymentEncodeView.as_view(), name='pay-details'),
+    path('payment-encode-details/', views.PaymentEncodeView.as_view(), name='pay-encode-details'),
     path('post/', views.BioEncodeFormPreview(BioEncodeForm), name='post')
 ]
