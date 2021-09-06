@@ -51,8 +51,8 @@ class Client(models.Model):
     email = models.EmailField()
     role=models.ForeignKey(Role, on_delete=models.PROTECT)
     
-    # def __str__(self):
-    #     return 'Policy: ' + self.name
+    def __str__(self):
+        return '%s, %s %s' % (self.last_name, self.first_name, self.middle_name)
     
     
     

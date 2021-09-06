@@ -4,6 +4,10 @@ from .models import *
 
 
 class BioEncodeForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(BioEncodeForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
     class Meta:
         
         model = Client
@@ -25,6 +29,10 @@ class BioEncodeForm(ModelForm):
         
         
 class PaymentDetailsForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(PaymentDetailsForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
     class Meta:
         
         model = PaymentDetails

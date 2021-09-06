@@ -14,6 +14,7 @@
                     <th>Batch</th>
                     <th>Premium Paid</th>
                     <th>Payment Date</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -21,9 +22,7 @@
                 <tr>
                     <td>{{ items.membership_branch }}</td>
                     <td>
-                        <a href="{% url 'pay-encode-details' %}">
-                            {{ items.last_name }}, {{ items.first_name }} {{ items.middle_name}}
-                        </a>
+                        {{ items.last_name }}, {{ items.first_name }} {{ items.middle_name}}
                     </td>
                     <td>{{ items.iaccs_id }}</td>
                     <td>{{ items.birth_date }}</td>
@@ -32,11 +31,20 @@
                     <td>TBQ</td>
                     <td>TBQ</td>
                     <td>TBQ</td>
+                    <td>
+                        <a href="{% url 'pay-encode-details' items.id %}">Pay</a>
+                    </td>
                 </tr>
                 {% empty %}
-                <tr>
-                    <td colspan="9" class="text-center">No such client for query "{{searchtext}}"</td>
-                </tr>
+                    {% if request.method == "GET" %}
+                        <tr>
+                            <td colspan="9"></td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="9" class="text-center">No such client for query "{{searchtext}}"</td>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
             </tbody>
         </table>
