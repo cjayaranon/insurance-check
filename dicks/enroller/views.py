@@ -51,13 +51,14 @@ class HomeView(generic.TemplateView):
         # return HttpResponseRedirect(reverse('home'))
         return render(request, self.template_name, {'query_list':query_list, 'searchtext':query})
     
+
     
 class SearchView(generic.TemplateView):
     template_name = 'create/search.html'
     
     def get(self, request, *args, **kwargs):
         query = kwargs['string']
-        print(kwargs)
+        
         query_list = Client.objects.filter(
             last_name__contains=query
             ) | Client.objects.filter(
@@ -67,8 +68,6 @@ class SearchView(generic.TemplateView):
             ) | Client.objects.filter(
             iaccs_id__contains=query)
             
-        # request.session['results_list'] = query_list
-        # return HttpResponseRedirect(reverse('home'))
         return render(request, self.template_name, {'query_list':query_list, 'searchtext':query})
     
     
@@ -83,9 +82,9 @@ class SearchView(generic.TemplateView):
             ) | Client.objects.filter(
             iaccs_id__contains=query)
             
-        # request.session['results_list'] = query_list
-        # return HttpResponseRedirect(reverse('home'))
         return render(request, self.template_name, {'query_list':query_list, 'searchtext':query})
+
+
         
 class BioEncodeView(generic.CreateView):
     form_class = BioEncodeForm
@@ -95,10 +94,11 @@ class BioEncodeView(generic.CreateView):
         
         
 class BioEncodeFormPreview(FormPreview):
-    # preview_template = 'create/bio-encode-preview.html'
+    '''
+    preview of bio-data encoding form
+    '''
+    
     def done(self, request, cleaned_data):
-        # print('<----cleaned_data---->')
-        # print(cleaned_data)
         data = Client(**cleaned_data)
         data.save()
         return HttpResponseRedirect(reverse('home'))
@@ -106,15 +106,26 @@ class BioEncodeFormPreview(FormPreview):
         
         
 class PaymentEncodeView(generic.CreateView):
+    '''
+    accepts model.id from search results on views
+    GET shows form with pre-selected Client in payor, membership_branch
+    '''
+    form_class = PaymentDetailsForm
     
     def get(self, request, *args, **kwargs):
         # set locked fields [payor, membership_branch, encoder_branch]
         # encoder_branch will be locked after login_required is enabled
-        
-        form_class = PaymentDetailsForm(request.GET or None, initial={'payor':kwargs['int']})
+        print('<----nag encode---->')
         template_name = 'create/payment-encode-details.html'
+        client = Client.objects.get(id=kwargs['int'])
         
-        print(kwargs)
+        form_class = PaymentDetailsForm(
+            request.GET or None, initial={
+                'payor':client.id,
+                'membership_branch':client.membership_branch
+                }
+            )
+        
         return render(request, template_name, {'form':form_class})
     
     
@@ -122,20 +133,21 @@ class PaymentEncodeView(generic.CreateView):
         '''
         used for the search bar on top of the page
         '''
-        if request.POST['searchtext']:
+        template_name = 'create/payment-encode-details.html'
+        print('<----submitted payment form---->')
+        if'searchtext' in request.POST:
             print('<----nag search---->')
             url = reverse('search', args=(request.POST['searchtext']))
-            raise Http404
+            return HttpResponseRedirect(url)
         else:
-            print('<----do nothing---->')
-            return HttpResponseRedirect(reverse('pay-preview'))
+            url = reverse('pay-preview')
+            return HttpResponseRedirect(url)
+        
+        
+        
+class PaymentDetailsFormPreview(FormPreview):
     
-    # def form_valid(self, form):
-    #     print('<------- PaymentEcode-------->')
-    #     return HttpResponseRedirect('/enroller/encode/')
-        
-        
-        
-class PayEncodeFormPreview(FormPreview):
-    def done(self, request, *args, **kwargs):
-        pass
+    def done(self, request, cleaned_data):
+        data = PaymentDetails(**cleaned_data)
+        data.save()
+        return HttpResponseRedirect(reverse('home'))

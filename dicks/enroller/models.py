@@ -87,10 +87,18 @@ class PremiumAmount(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=3)
     
     
+    def __str__(self):
+        return str(self.amount)
+    
+    
     
 class CutoffPeriod(models.Model):
     from_date = models.DateField()
     to_date = models.DateField()
+    
+    
+    def __str__(self):
+        return '%s to %s' % (self.from_date, self.to_date)
     
     
     
@@ -99,9 +107,17 @@ class ClientTagging(models.Model):
     tag_description = models.CharField(max_length=32)
     
     
+    def __str__(self):
+        return self.tag_name
+    
+    
     
 class PaymentType(models.Model):
     type_name = models.CharField(max_length=32)
+    
+    
+    def __str__(self):
+        return self.type_name
     
     
     
