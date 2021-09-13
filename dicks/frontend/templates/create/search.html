@@ -7,7 +7,8 @@
                 <tr>
                     <th>Branch</th>
                     <th>Full Name</th>
-                    <th>Client ID</th>
+                    <th>Role</th>
+                    <th>IACCS ID</th>
                     <th>Birth Date</th>
                     <th>Age</th>
                     <th>Age Bracket</th>
@@ -19,31 +20,39 @@
             </thead>
             <tbody>
                 {% for items in query_list %}
-                <tr>
-                    <td>{{ items.membership_branch }}</td>
-                    <td>
-                        {{ items.last_name }}, {{ items.first_name }} {{ items.middle_name}}
-                    </td>
-                    <td>{{ items.iaccs_id }}</td>
-                    <td>{{ items.birth_date }}</td>
-                    <td>TBC</td>
-                    <td>TBC</td>
-                    <td>TBQ</td>
-                    <td>TBQ</td>
-                    <td>TBQ</td>
-                    <td>
-                        <a href="{% url 'pay-encode-details' items.id %}">Pay</a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>{{ items.membership_branch }}</td>
+                        <td>
+                            {{ items.last_name }}, {{ items.first_name }} {{ items.middle_name }}
+                        </td>
+                        <td>{{ items.role }}</td>
+                        <td>{{ items.iaccs_id }}</td>
+                        <td>{{ items.birth_date }}</td>
+                        <td>TBC</td>
+                        <td>TBC</td>
+                        <td>TBQ</td>
+                        {% for items2 in items.payor.all %}
+                        <td>{{ items2.premium_paid }}</td>
+                        <td>{{ items2.date_of_payment }}</td>
+                        {% empty %}
+                        <td colspan="2">No Payments</td>
+                        {% endfor %}
+                        
+                        <td>
+                            <a href="{% url 'pay-encode-details' items.id %}">Pay</a>
+                        </td>
+                    </tr>
                 {% empty %}
                     {% if request.method == "GET" %}
-                        <tr>
-                            <td colspan="9"></td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="9" class="text-center">No such client for query "{{searchtext}}"</td>
-                        </tr>
+                        {% if searchtext %}
+                            <tr>
+                                <td colspan="10" class="text-center">No such client for query "{{searchtext}}"</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="10" name="last tr"></td>
+                            </tr>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
             </tbody>

@@ -45,5 +45,7 @@ class PaymentDetailsForm(ModelForm):
             'premium_paid',
             'auth_agent',
             'payment_type',
-            'tagging'
+            'tagging',
+            'beneficiary1',
+            'beneficiary2'
         ]

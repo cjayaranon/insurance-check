@@ -55,6 +55,10 @@ class Client(models.Model):
         return '%s, %s %s' % (self.last_name, self.first_name, self.middle_name)
     
     
+    def get_payments(self):
+        return self.paymentdetails.select_related('payor')
+    
+    
     
 class Designation(models.Model):
     designation_name = models.CharField(max_length=32)
@@ -122,7 +126,7 @@ class PaymentType(models.Model):
     
     
 class PaymentDetails(models.Model):
-    payor = models.ForeignKey(Client, on_delete=models.PROTECT)
+    payor = models.ForeignKey(Client, on_delete=models.PROTECT, related_name='payor')
     encoder_branch = models.ForeignKey(Branch, related_name='encoder', on_delete=models.PROTECT)
     membership_branch = models.ForeignKey(Branch, on_delete=models.PROTECT)
     date_of_payment = models.DateField()
@@ -131,4 +135,10 @@ class PaymentDetails(models.Model):
     auth_agent = models.ForeignKey(Agent, on_delete=models.PROTECT)
     payment_type = models.ForeignKey(PaymentType, on_delete=models.PROTECT)
     tagging = models.ForeignKey(ClientTagging, on_delete=models.PROTECT)
+    beneficiary1 = models.ForeignKey(Client, on_delete=models.PROTECT, related_name='beneficiary1')
+    beneficiary2 = models.ForeignKey(Client, on_delete=models.PROTECT, related_name='beneficiary2')
+    
+    
+    def __str__(self):
+        return '%s %s' % (self.date_of_payment, self.payor)
     
