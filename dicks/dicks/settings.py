@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dicks',
-    'enroller'
+    'enroller',
+    'formtools',
 ]
 
 MIDDLEWARE = [
@@ -116,6 +117,10 @@ USE_L10N = True
 USE_TZ = True
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# DATE_FORMAT = '%b %d %Y'
+
+DATE_INPUT_FORMATS = ['%b %d %Y']
 
 
 # Static files (CSS, JavaScript, Images)

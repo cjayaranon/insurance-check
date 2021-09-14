@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'custom_css/encode.css' %}">
+{% endblock css %}
+{% block content %}
+{% block pagetitle %}<title>Payment Details</title>{% endblock pagetitle %}
+<form class="" action="{% url 'pay-preview' %}" method="post">
+    <div class="container">
+        <div class="row">
+            <div class="mb-3">
+                {% csrf_token %}
+                <table>
+                    {{form.as_table}}
+                </table>
+                <button type="submit" class="btn btn-primary" name="next">Next</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}
