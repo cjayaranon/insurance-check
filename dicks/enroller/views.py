@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.views import generic
 from django.urls import reverse
 from formtools.preview import FormPreview
-# from itertools import chain
 from .models import *
 from .forms import *
 
@@ -46,7 +45,7 @@ class SearchView(generic.TemplateView):
     template_name = 'create/search.html'
     
     def get(self, request, *args, **kwargs):
-        query = kwargs['string']
+        query = kwargs['searchtext']
         
         client_list = Client.objects.filter(
             last_name__contains=query
@@ -58,9 +57,9 @@ class SearchView(generic.TemplateView):
             iaccs_id__contains=query
             )
             
-        print('<----client_list---->')
-        print(client_list)
-        print(kwargs)
+        # print('<----client_list---->')
+        # print(client_list)
+        # print(kwargs)
             
         return render(request, self.template_name, {'query_list':client_list, 'searchtext':query})
     

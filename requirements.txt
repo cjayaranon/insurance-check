@@ -1,7 +1,15 @@
 asgiref==3.4.1
+chardet==4.0.0
 Django==3.2.6
+django-excel==0.0.10
 django-filter==2.4.0
+django-formtools==2.3
 djangorestframework==3.12.4
+lml==0.1.0
 Markdown==3.3.4
+pyexcel==0.6.7
+pyexcel-io==0.6.4
+pyexcel-webio==0.1.4
 pytz==2021.1
 sqlparse==0.4.1
+texttable==1.6.4
