@@ -35,8 +35,7 @@ class HomeView(generic.TemplateView):
     '''
     template_name = 'create/search.html'
     def post(self, request, *args, **kwargs):
-        url = reverse('search', args=(request.POST['searchtext']))
-        return HttpResponseRedirect(url)
+        return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
         
     
 
@@ -65,8 +64,7 @@ class SearchView(generic.TemplateView):
     
     
     def post(self, request, *args, **kwargs):
-        url = reverse('search', args=(request.POST['searchtext']))
-        return HttpResponseRedirect(url)
+        return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
 
 
         
@@ -76,8 +74,7 @@ class BioEncodeView(generic.CreateView):
     
     def post(self, request, *args, **kwargs):
         if 'searchtext' in request.POST:
-            url = reverse('search', args=(request.POST['searchtext']))
-            return HttpResponseRedirect(url)
+            return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
         else:
             url = reverse('encode-preview')
             return HttpResponseRedirect(url)
@@ -127,8 +124,7 @@ class PaymentEncodeView(generic.CreateView):
         template_name = 'create/payment-encode-details.html'
 
         if'searchtext' in request.POST:
-            url = reverse('search', args=(request.POST['searchtext']))
-            return HttpResponseRedirect(url)
+            return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
         else:
             url = reverse('pay-preview')
             return HttpResponseRedirect(url)
