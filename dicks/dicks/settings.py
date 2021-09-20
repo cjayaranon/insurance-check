@@ -120,7 +120,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # DATE_FORMAT = '%b %d %Y'
 
-DATE_INPUT_FORMATS = ['%b %d %Y']
+# DATE_INPUT_FORMATS = ['%b %d %Y']
 
 
 # Static files (CSS, JavaScript, Images)
@@ -133,6 +133,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend', 'static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIAFILES_DIRS = [os.path.join(BASE_DIR, 'frontend', 'uploads')]
+
+FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler", "django_excel.TemporaryExcelFileUploadHandler")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<form class="form-group" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table}}
+    </table>
+    <button class="btn btn-lg btn-block btn-success" type="submit" name="upload-button">Upload</button>
+</form>
+
+{% endblock content %}
