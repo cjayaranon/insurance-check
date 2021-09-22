@@ -4,8 +4,11 @@ from .models import *
 
 
 
+class ClientAdmin(admin.ModelAdmin):
+    list_display = ['membership_branch', 'last_name']
+
 admin.site.register(Role)
-admin.site.register(Client)
+admin.site.register(Client, ClientAdmin)
 admin.site.register(Branch)
 admin.site.register(Designation)
 admin.site.register(Agent)

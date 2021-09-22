@@ -1,4 +1,4 @@
-import csv
+import csv, io
 from django.db.models.functions import Floor
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render
@@ -73,34 +73,47 @@ class UploadCSV(generic.TemplateView):
     def post(self, request, *args, **kwargs):
         csv_file = request.FILES["file"]
         file_data = csv_file.read().decode("iso-8859-1")
-        lines = file_data.split("\n")
+        io_string = io.StringIO(file_data)
+        # lines = io_string.split("\n")
+        
+        # idea: count number of entries first before looping
 
-        for line in lines:
-            lines = file_data.split("\n")
-            fields = line.split(",")
-            data_dict = {}
-            data_dict['iaccs_id'] = int(float(fields[0]))  #change to whole number
-            data_dict['membership_branch'] = Branch.objects.get(branch_name = 'Agdao')  #change to dynamic
-            data_dict['first_name'] = fields[3]
-            data_dict['middle_name'] = fields[5]
-            data_dict['last_name'] = fields[2]
-            data_dict['name_extension'] = fields[4]
-            data_dict['address'] = ''
-            data_dict['gender'] = ''
-            data_dict['civil_status'] = ''
-            data_dict['birth_date'] = fields[9]
-            data_dict['email'] = ''
-            data_dict['role'] = Role.objects.get(role_name__icontains = 'Planholder')
-            
-            try:
-                form = BioEncodeForm(data_dict)
-                if form.is_valid():
-                    form.save()
-                else:
+        for lines in csv.reader(io_string):
+            # iaccs_id on CSV file cannot be blank
+            if lines[0] is '':
+                break
+            else:
+                data_dict = {}
+                data_dict['iaccs_id'] = float(lines[0])  #change to whole number
+                data_dict['membership_branch'] = Branch.objects.get(branch_name = lines[1])  #change to dynamic
+                data_dict['first_name'] = lines[3]
+                data_dict['middle_name'] = lines[4]
+                data_dict['last_name'] = lines[2]
+                data_dict['name_extension'] = lines[5]
+                data_dict['address'] = ''
+                data_dict['gender'] = ''
+                data_dict['civil_status'] = ''
+                data_dict['birth_date'] = lines[6]
+                data_dict['email'] = ''
+                data_dict['role'] = Role.objects.get(role_name__icontains = 'Planholder')
+                
+                try:
+                    form = BioEncodeForm(data_dict)
+                    if form.is_valid():
+                        form.save()
+                    else:
+                        
+                        print(form.errors)
+                        # return HttpResponseRedirect(reverse('csv-up'))
+                        print('<----inner else---->')
+                        break
+                except Exception as e:
+                    
                     print(form.errors)
-                    return HttpResponseRedirect(reverse('csv-up'))
-            except Exception as e:
-                print(form.errors)
-                return HttpResponseRedirect(reverse('csv-up'))
-        print('<----data saved---->')
+                    # return HttpResponseRedirect(reverse('csv-up'))
+                    print('<---- outer try except---->')
+                    break
+                    
+                # file_data.close()
+                print('<----data saved---->')
         return HttpResponseRedirect(reverse('home'))
