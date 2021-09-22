@@ -117,3 +117,6 @@ dmypy.json
 # project folders
 node_modules/
 dicks/static/
+*.xls
+*.csv
+*.xlsx
