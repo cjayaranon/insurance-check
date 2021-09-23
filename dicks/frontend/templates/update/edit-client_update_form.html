@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+{% block pagetitle %}<title>Editing Client</title>{% endblock pagetitle %}
+<form class="" method="post">
+    <div class="container">
+        <div class="row">
+            <div class="mb-3">
+                {% csrf_token %}
+                <table>
+                    {{form.as_table}}
+                    {# {{ form|crispy }} #}
+                </table>
+            </div>
+        </div>
+    </div>
+    <button type="submit" name="button">Update</button>
+</form>
+{% endblock content %}

@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dicks',
     'enroller',
+    'editclient',
     'formtools',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
