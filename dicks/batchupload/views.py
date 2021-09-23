@@ -100,17 +100,20 @@ class UploadCSV(generic.TemplateView):
                 try:
                     form = BioEncodeForm(data_dict)
                     if form.is_valid():
-                        form.save()
+                        if Client.objects.get(first_name = lines[3], last_name = lines[2], middle_name = lines[4]):
+                            print('<----duplicate---->')
+                            print('%s %s' % lines[3], lines[2])
+                            # add statement to add duplicated names to a dictionary
+                            # then output to views
+                        else:
+                            form.save()
                     else:
-                        
                         print(form.errors)
-                        # return HttpResponseRedirect(reverse('csv-up'))
                         print('<----inner else---->')
                         break
                 except Exception as e:
                     
                     print(form.errors)
-                    # return HttpResponseRedirect(reverse('csv-up'))
                     print('<---- outer try except---->')
                     break
                     
