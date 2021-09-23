@@ -5,7 +5,7 @@ from .models import *
 
 
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ['membership_branch', 'last_name']
+    list_display = ['membership_branch', 'id', 'last_name']
 
 admin.site.register(Role)
 admin.site.register(Client, ClientAdmin)

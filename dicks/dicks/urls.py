@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
+    path('update/', include('editclient.urls')),
     path('enroller/', include('enroller.urls')),
     path('batchupload/', include('batchupload.urls')),
     path('admin/', admin.site.urls),
