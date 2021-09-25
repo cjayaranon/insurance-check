@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -70,14 +73,25 @@ class Designation(models.Model):
     
     
 class Agent(models.Model):
-    first_name = models.CharField(max_length=32)
-    middle_name = models.CharField(max_length=32)
-    last_name = models.CharField(max_length=32)
+    # first_name = models.CharField(max_length=32)
+    # middle_name = models.CharField(max_length=32)
+    # last_name = models.CharField(max_length=32)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     branch = models.ForeignKey(Branch, on_delete=models.PROTECT)
     designation = models.ForeignKey(Designation, on_delete=models.PROTECT)
     
     def __str__(self):
-        return self.last_name + str(self.id)
+        return str(self.user)
+        
+        
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Agent.objects.create(user=instance)
+
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.agent.save()
     
     
     

@@ -1,0 +1,21 @@
+
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'custom_css/encode.css' %}">
+{% endblock css %}
+{% block content %}
+{% block pagetitle %}<title>Welcome</title>{% endblock pagetitle %}
+<form class="" action="" method="post">
+    <div class="container">
+        <div class="row">
+            <div class="mb-3">
+                {% csrf_token %}
+                <table class="table">
+                    {{form.as_table}}
+                </table>
+                <button type="submit" name="button">Log In</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}

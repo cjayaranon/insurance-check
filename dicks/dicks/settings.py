@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-c^w#e)=j)*j)&xx@yhpmst62h_8883(d&+gd^5%)g1*vi$$iyj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -144,3 +144,6 @@ FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler", "django_exc
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
+
+LOGIN_REDIRECT_URL = '/enroller/home/'
+LOGOUT_REDIRECT_URL = '/login/'
