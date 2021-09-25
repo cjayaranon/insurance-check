@@ -76,7 +76,7 @@ class Agent(models.Model):
     # first_name = models.CharField(max_length=32)
     # middle_name = models.CharField(max_length=32)
     # last_name = models.CharField(max_length=32)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null = True)
     branch = models.ForeignKey(Branch, on_delete=models.PROTECT)
     designation = models.ForeignKey(Designation, on_delete=models.PROTECT)
     
