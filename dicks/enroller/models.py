@@ -76,9 +76,9 @@ class Agent(models.Model):
     # first_name = models.CharField(max_length=32)
     # middle_name = models.CharField(max_length=32)
     # last_name = models.CharField(max_length=32)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null = True)
-    branch = models.ForeignKey(Branch, on_delete=models.PROTECT)
-    designation = models.ForeignKey(Designation, on_delete=models.PROTECT)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null = True) #set to null for initialization, will find a workaround in implementation
+    branch = models.ForeignKey(Branch, on_delete=models.PROTECT, null=True)
+    designation = models.ForeignKey(Designation, on_delete=models.PROTECT, null=True)
     
     def __str__(self):
         return str(self.user)

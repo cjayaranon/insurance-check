@@ -34,6 +34,7 @@ class HomeView(generic.TemplateView):
     '''
     landing page after login
     contains search
+    add get function to facilitate redirection if user == Branch Manager | user == Branch Marketing
     '''
     template_name = 'create/search.html'
     def post(self, request, *args, **kwargs):

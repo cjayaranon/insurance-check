@@ -8,6 +8,7 @@
             <li> <a href="{% url 'pay-approver-link' %}" class="nav-link px-2 link-dark">Home</a> </li>
             <li><a href="{% url 'logout' %}" class="nav-link px-2 link-dark">Log Out</a></li>
         {% else %}
+            <li> <a href="{% url 'home' %}" class="nav-link px-2 link-dark">Home</a> </li>
             <li><a href="{% url 'encode' %}" class="nav-link px-2 link-dark">New</a></li>
             <li><a href="{% url 'logout' %}" class="nav-link px-2 link-dark">Log Out</a></li>
         {% endif %}
