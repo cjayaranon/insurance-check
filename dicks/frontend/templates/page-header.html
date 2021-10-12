@@ -3,12 +3,14 @@
     <a href="{% static 'ampc-logo-high-res.png' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
         <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
     </a>
-
     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="{% url 'home' %}" class="nav-link px-2 link-secondary">Home</a></li>
-        <li><a href="{% url 'encode' %}" class="nav-link px-2 link-dark">New</a></li>
-        <!-- <li><a href="#" class="nav-link px-2 link-dark">Edit</a></li> -->
-        <li><a href="{% url 'logout' %}" class="nav-link px-2 link-dark">Log Out</a></li>
+        {% if user.agent.designation.designation_name == "Branch Manager" %}
+            <li> <a href="{% url 'pay-approver-link' %}" class="nav-link px-2 link-dark">Home</a> </li>
+            <li><a href="{% url 'logout' %}" class="nav-link px-2 link-dark">Log Out</a></li>
+        {% else %}
+            <li><a href="{% url 'encode' %}" class="nav-link px-2 link-dark">New</a></li>
+            <li><a href="{% url 'logout' %}" class="nav-link px-2 link-dark">Log Out</a></li>
+        {% endif %}
     </ul>
 
     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="" method="post">
@@ -27,5 +29,6 @@
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Sign out</a></li>
         </ul>
+        
     </div>
 </div>

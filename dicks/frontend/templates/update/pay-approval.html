@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block css %}
+
+{% endblock css %}
+{% block content %}
+{% block pagetitle %}<title>Approving Client</title>{% endblock pagetitle %}
+<div class="container">
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Payor</th>
+                    <th>Premium Paid</th>
+                    <th>Agent</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for items in query_list %}
+                    <tr>
+                        <td>{{ items.payor }}</td>
+                        <td>{{ items.premium_paid }}</td>
+                        <td>{{ items.auth_agent }}</td>
+                        <td>View For Approval</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content%}

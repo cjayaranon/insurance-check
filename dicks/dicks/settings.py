@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'editclient',
     'formtools',
     'crispy_forms',
+    'approver',
 ]
 
 MIDDLEWARE = [
