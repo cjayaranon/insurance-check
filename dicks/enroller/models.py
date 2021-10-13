@@ -144,6 +144,8 @@ class PaymentDetails(models.Model):
     encoder_branch = models.ForeignKey(Branch, related_name='encoder', on_delete=models.PROTECT)
     membership_branch = models.ForeignKey(Branch, on_delete=models.PROTECT)
     date_of_payment = models.DateField()
+    recording_date = models.DateField(auto_now_add=True)
+    update_date = models.DateField(auto_now=True)
     cutoff_period = models.ForeignKey(CutoffPeriod, on_delete=models.PROTECT)
     premium_paid = models.ForeignKey(PremiumAmount, on_delete=models.PROTECT)
     auth_agent = models.ForeignKey(Agent, on_delete=models.PROTECT)
@@ -154,5 +156,7 @@ class PaymentDetails(models.Model):
     
     
     def __str__(self):
-        return '%s %s' % (self.date_of_payment, self.payor)
-    
+        return '%s | %s | %s' % (self.payor, self.date_of_payment, self.premium_paid)
+        
+        
+        

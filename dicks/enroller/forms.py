@@ -41,7 +41,6 @@ class PaymentDetailsForm(ModelForm):
             'encoder_branch',
             'membership_branch',
             'date_of_payment',
-            'cutoff_period',
             'premium_paid',
             'auth_agent',
             'payment_type',

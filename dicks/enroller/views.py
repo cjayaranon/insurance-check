@@ -37,6 +37,16 @@ class HomeView(generic.TemplateView):
     add get function to facilitate redirection if user == Branch Manager | user == Branch Marketing
     '''
     template_name = 'create/search.html'
+    
+    def get(self, request, *args, **kwargs):
+        if request.user.agent.designation.designation_name == 'Branch Manager':
+            print('<----BM---->')
+            return HttpResponseRedirect(reverse('pay-approver-link'))
+        else:
+            print(request.user.agent.designation)
+            return render(request, self.template_name, {})
+            
+            
     def post(self, request, *args, **kwargs):
         return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
         
