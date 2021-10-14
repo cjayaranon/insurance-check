@@ -136,7 +136,7 @@ class PaymentEncodeView(generic.CreateView):
         '''
         template_name = 'create/payment-encode-details.html'
 
-        if'searchtext' in request.POST:
+        if 'searchtext' in request.POST:
             return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
         else:
             url = reverse('pay-preview')

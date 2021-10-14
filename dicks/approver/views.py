@@ -20,26 +20,14 @@ class BMapprove(generic.TemplateView):
         
         
 class ApproveView(generic.TemplateView):
-    # model = PaymentDetails
+    '''
+    contains PaymentDetails
+    redirect here from BM landing/payments views
+    '''
     template_name = 'update/paymentdetails_update_form.html'
     success_url = 'pay-approver-link'
     
     def get(self, request, *args, **kwargs):
-        info_list = PaymentDetails.objects.filter(id=kwargs['pk']).values_list(
-            'payor',
-            'encoder_branch',
-            'membership_branch',
-            'date_of_payment',
-            'recording_date',
-            'update_date',
-            'cutoff_period',
-            'premium_paid',
-            'auth_agent',
-            'payment_type',
-            'tagging',
-            'beneficiary1',
-            'beneficiary2',
-        )
         label_list = [
             'Payor',
             'Encoder Branch',
@@ -47,7 +35,7 @@ class ApproveView(generic.TemplateView):
             'Date of Payment',
             'Recording Date',
             'Payment Last Updated',
-            'Cut-off Period',
+            'Cut-off Period (YYYY-MM-DD)',
             'Premium Paid',
             'Agent',
             'Payment Type',
@@ -55,14 +43,33 @@ class ApproveView(generic.TemplateView):
             'Beneficiary 1',
             'Beneficiary 2'
             ]
+        # get paymentdetails, 1 returns 1 record only
+        items = PaymentDetails.objects.get(pk=kwargs['pk'])
+        info_list = [
+            items.payor,
+            items.encoder_branch,
+            items.membership_branch,
+            items.date_of_payment,
+            items.recording_date,
+            items.update_date,
+            items.cutoff_period,
+            items.premium_paid,
+            items.auth_agent.user.first_name,
+            items.payment_type,
+            items.tagging,
+            items.beneficiary1,
+            items.beneficiary2,
+        ]
+
+        full_list = zip(label_list, info_list)
         
-        final_list = []
-        for items in info_list:
-            for v in items:
-                final_list.append(v)
-                
-        full_list = zip(label_list, final_list)
-        print(full_list)
         return render(request, self.template_name, {'full_list':full_list})
+        
+        
+    def post(self, request, *args, **kwargs):
+        if 'cancel' in request.POST:
+            print('<----yay---->')
+        else:
+            print('<----yay again---->')
         
         
