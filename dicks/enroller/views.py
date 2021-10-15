@@ -123,7 +123,8 @@ class PaymentEncodeView(generic.CreateView):
         form_class = PaymentDetailsForm(
             request.GET or None, initial={
                 'payor':client.id,
-                'membership_branch':client.membership_branch
+                'membership_branch':client.membership_branch,
+                'auth_agent':request.user.agent
                 }
             )
         

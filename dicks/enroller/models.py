@@ -172,9 +172,10 @@ class PaymentTagging(models.Model):
     @receiver(post_save, sender=PaymentDetails)
     def create_payment_tagging(sender, instance, created, **kwargs):
         if created:
-            PaymentTagging.objects.create(user=instance)
+            PaymentTagging.objects.create(tag='PENDING', payment=instance, approver=instance.auth_agent)
 
     @receiver(post_save, sender=PaymentDetails)
     def save_payment_tagging(sender, instance, **kwargs):
-        instance.paymenttagging.save()
+        # instance.save() # stackoverflow
+        pass
         

@@ -36,15 +36,15 @@ class PaymentDetailsForm(ModelForm):
     class Meta:
         
         model = PaymentDetails
-        fields = [
-            'payor',
-            'encoder_branch',
-            'membership_branch',
-            'date_of_payment',
-            'premium_paid',
-            'auth_agent',
-            'payment_type',
-            'tagging',
-            'beneficiary1',
-            'beneficiary2'
-        ]
+        fields = '__all__'
+            # 'payor',
+            # 'encoder_branch',
+            # 'membership_branch',
+            # 'date_of_payment',
+            # 'premium_paid',
+            # 'auth_agent',
+            # 'payment_type',
+            # 'tagging',
+            # 'beneficiary1',
+            # 'beneficiary2'
+        # ]
