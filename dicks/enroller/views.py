@@ -41,7 +41,7 @@ class HomeView(generic.TemplateView):
     def get(self, request, *args, **kwargs):
         if request.user.agent.designation.designation_name == 'Branch Manager':
             print('<----BM---->')
-            return HttpResponseRedirect(reverse('pay-approver-link'))
+            return HttpResponseRedirect(reverse('pay-approver-home'))
         else:
             print(request.user.agent.designation)
             return render(request, self.template_name, {})

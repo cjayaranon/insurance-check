@@ -1,8 +1,9 @@
+from django.contrib import messages
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.views import generic
-# from django.urls import reverse
-from enroller.models import PaymentDetails
+from django.urls import reverse
+from enroller.models import PaymentDetails, PaymentTagging
 
 # Create your views here.
 
@@ -13,9 +14,10 @@ class BMapprove(generic.TemplateView):
     template_name = 'update/pay-approval.html'
     
     def get(self, request, *args, **kwargs):
-        client_list = PaymentDetails.objects.all()
+        # modify to fetch only PaymentDetails tagged as pending thru PaymentTagging
+        query_list = PaymentTagging.objects.filter(tag='PENDING')
         
-        return render(request, self.template_name, {'query_list':client_list})
+        return render(request, self.template_name, {'query_list':query_list})
         
         
         
@@ -25,7 +27,7 @@ class ApproveView(generic.TemplateView):
     redirect here from BM landing/payments views
     '''
     template_name = 'update/paymentdetails_update_form.html'
-    success_url = 'pay-approver-link'
+    success_url = 'pay-approver-home'
     
     def get(self, request, *args, **kwargs):
         label_list = [
@@ -44,7 +46,7 @@ class ApproveView(generic.TemplateView):
             'Beneficiary 2'
             ]
         # get paymentdetails, 1 returns 1 record only
-        items = PaymentDetails.objects.get(pk=kwargs['pk'])
+        items = PaymentDetails.objects.get(pk=kwargs['pay_details'])
         info_list = [
             items.payor,
             items.encoder_branch,
@@ -67,9 +69,17 @@ class ApproveView(generic.TemplateView):
         
         
     def post(self, request, *args, **kwargs):
+        # model = PaymentTagging.objects.get(pk=kwargs['pay_tag'])
         if 'cancel' in request.POST:
-            print('<----yay---->')
+            
+            # model = PaymentTagging(tag='CANCEL', approver=request.user.agent, payment=PaymentDetails.objects.get(pk=kwargs['pk']))
+            model = PaymentTagging(pk=kwargs['pay_tag'], tag='CANCEL', approver=request.user.agent, payment=PaymentDetails.objects.get(pk=kwargs['pay_details']))
+            model.save()
+            # edit tag to CANCEL in PaymentTagging then redirect to BM home with warning message
+            messages.warning(request, 'Payment successfully cancelled.')
+            return HttpResponseRedirect(reverse('pay-approver-home'))
         else:
+            # add tag approved to PaymentTagging then redirect to BM home with success message
             print('<----yay again---->')
         
         

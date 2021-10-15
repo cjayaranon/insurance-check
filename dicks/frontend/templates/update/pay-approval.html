@@ -14,9 +14,9 @@
             <tbody>
                 {% for items in query_list %}
                     <tr>
-                        <td>{{ items }}</td>
-                        <td>{{ items.auth_agent }}</td>
-                        <td><a href="{% url 'pay-approve-view' items.id %}">View For Approval</a></td>
+                        <td>{{ items.payment }}</td>
+                        <td>{{ items.payment.auth_agent }}</td>
+                        <td><a href="{% url 'pay-approve-view' items.payment.id items.id %}">View For Approval</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

@@ -159,4 +159,22 @@ class PaymentDetails(models.Model):
         return '%s | %s | %s' % (self.payor, self.date_of_payment, self.premium_paid)
         
         
+class PaymentTagging(models.Model):
+    PAY_TAG = (
+        ('APPROVE', 'Approved'),
+        ('CANCEL', 'Cancelled'),
+        ('PENDING', 'Pending')
+    )
+    tag = models.CharField(max_length=10, choices=PAY_TAG)
+    approver = models.ForeignKey(Agent, on_delete=models.PROTECT)
+    payment = models.ForeignKey(PaymentDetails, on_delete=models.PROTECT)
+    
+    @receiver(post_save, sender=PaymentDetails)
+    def create_payment_tagging(sender, instance, created, **kwargs):
+        if created:
+            PaymentTagging.objects.create(user=instance)
+
+    @receiver(post_save, sender=PaymentDetails)
+    def save_payment_tagging(sender, instance, **kwargs):
+        instance.paymenttagging.save()
         

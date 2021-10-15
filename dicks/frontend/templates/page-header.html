@@ -5,7 +5,7 @@
     </a>
     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         {% if user.agent.designation.designation_name == "Branch Manager" %}
-            <li> <a href="{% url 'pay-approver-link' %}" class="nav-link px-2 link-dark">Home</a> </li>
+            <li> <a href="{% url 'pay-approver-home' %}" class="nav-link px-2 link-dark">Home</a> </li>
             <li><a href="{% url 'logout' %}" class="nav-link px-2 link-dark">Log Out</a></li>
         {% else %}
             <li> <a href="{% url 'home' %}" class="nav-link px-2 link-dark">Home</a> </li>
