@@ -69,17 +69,17 @@ class ApproveView(generic.TemplateView):
         
         
     def post(self, request, *args, **kwargs):
-        # model = PaymentTagging.objects.get(pk=kwargs['pay_tag'])
         if 'cancel' in request.POST:
-            
-            # model = PaymentTagging(tag='CANCEL', approver=request.user.agent, payment=PaymentDetails.objects.get(pk=kwargs['pk']))
+            # edit tag to CANCEL in PaymentTagging then redirect to BM home with warning message
             model = PaymentTagging(pk=kwargs['pay_tag'], tag='CANCEL', approver=request.user.agent, payment=PaymentDetails.objects.get(pk=kwargs['pay_details']))
             model.save()
-            # edit tag to CANCEL in PaymentTagging then redirect to BM home with warning message
             messages.warning(request, 'Payment successfully cancelled.')
-            return HttpResponseRedirect(reverse('pay-approver-home'))
         else:
             # add tag approved to PaymentTagging then redirect to BM home with success message
-            print('<----yay again---->')
+            model = PaymentTagging(pk=kwargs['pay_tag'], tag='APPROVE', approver=request.user.agent, payment=PaymentDetails.objects.get(pk=kwargs['pay_details']))
+            model.save()
+            messages.success(request, 'Payment successfully approved.')
+        
+        return HttpResponseRedirect(reverse('pay-approver-home'))
         
         

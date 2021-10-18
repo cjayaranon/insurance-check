@@ -69,10 +69,6 @@ class SearchView(generic.TemplateView):
             iaccs_id__contains=query
             )
             
-        # print('<----client_list---->')
-        # print(client_list)
-        # print(kwargs)
-            
         return render(request, self.template_name, {'query_list':client_list, 'searchtext':query})
     
     

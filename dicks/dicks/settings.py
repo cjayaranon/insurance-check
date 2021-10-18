@@ -146,5 +146,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 
-LOGIN_REDIRECT_URL = '/enroller/home/'
+LOGIN_REDIRECT_URL = '/enroller/'
 LOGOUT_REDIRECT_URL = '/login/'
