@@ -18,6 +18,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import include, path
 
 urlpatterns = [
+    path('approver/', include('approver.urls')),
     path('', include('django.contrib.auth.urls')),
     path('update/', include('editclient.urls')),
     path('enroller/', include('enroller.urls')),

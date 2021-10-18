@@ -34,8 +34,19 @@ class HomeView(generic.TemplateView):
     '''
     landing page after login
     contains search
+    add get function to facilitate redirection if user == Branch Manager | user == Branch Marketing
     '''
     template_name = 'create/search.html'
+    
+    def get(self, request, *args, **kwargs):
+        if request.user.agent.designation.designation_name == 'Branch Manager':
+            print('<----BM---->')
+            return HttpResponseRedirect(reverse('pay-approver-home'))
+        else:
+            print(request.user.agent.designation)
+            return render(request, self.template_name, {})
+            
+            
     def post(self, request, *args, **kwargs):
         return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
         
@@ -57,10 +68,6 @@ class SearchView(generic.TemplateView):
             ) | Client.objects.filter(
             iaccs_id__contains=query
             )
-            
-        # print('<----client_list---->')
-        # print(client_list)
-        # print(kwargs)
             
         return render(request, self.template_name, {'query_list':client_list, 'searchtext':query})
     
@@ -112,7 +119,8 @@ class PaymentEncodeView(generic.CreateView):
         form_class = PaymentDetailsForm(
             request.GET or None, initial={
                 'payor':client.id,
-                'membership_branch':client.membership_branch
+                'membership_branch':client.membership_branch,
+                'auth_agent':request.user.agent
                 }
             )
         
@@ -125,7 +133,7 @@ class PaymentEncodeView(generic.CreateView):
         '''
         template_name = 'create/payment-encode-details.html'
 
-        if'searchtext' in request.POST:
+        if 'searchtext' in request.POST:
             return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
         else:
             url = reverse('pay-preview')

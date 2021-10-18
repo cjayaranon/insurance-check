@@ -76,9 +76,9 @@ class Agent(models.Model):
     # first_name = models.CharField(max_length=32)
     # middle_name = models.CharField(max_length=32)
     # last_name = models.CharField(max_length=32)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null = True)
-    branch = models.ForeignKey(Branch, on_delete=models.PROTECT)
-    designation = models.ForeignKey(Designation, on_delete=models.PROTECT)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null = True) #set to null for initialization, will find a workaround in implementation
+    branch = models.ForeignKey(Branch, on_delete=models.PROTECT, null=True)
+    designation = models.ForeignKey(Designation, on_delete=models.PROTECT, null=True)
     
     def __str__(self):
         return str(self.user)
@@ -144,6 +144,8 @@ class PaymentDetails(models.Model):
     encoder_branch = models.ForeignKey(Branch, related_name='encoder', on_delete=models.PROTECT)
     membership_branch = models.ForeignKey(Branch, on_delete=models.PROTECT)
     date_of_payment = models.DateField()
+    recording_date = models.DateField(auto_now_add=True)
+    update_date = models.DateField(auto_now=True)
     cutoff_period = models.ForeignKey(CutoffPeriod, on_delete=models.PROTECT)
     premium_paid = models.ForeignKey(PremiumAmount, on_delete=models.PROTECT)
     auth_agent = models.ForeignKey(Agent, on_delete=models.PROTECT)
@@ -154,5 +156,26 @@ class PaymentDetails(models.Model):
     
     
     def __str__(self):
-        return '%s %s' % (self.date_of_payment, self.payor)
+        return '%s | %s | %s' % (self.payor, self.date_of_payment, self.premium_paid)
+        
+        
+class PaymentTagging(models.Model):
+    PAY_TAG = (
+        ('APPROVE', 'Approved'),
+        ('CANCEL', 'Cancelled'),
+        ('PENDING', 'Pending')
+    )
+    tag = models.CharField(max_length=10, choices=PAY_TAG)
+    approver = models.ForeignKey(Agent, on_delete=models.PROTECT)
+    payment = models.ForeignKey(PaymentDetails, on_delete=models.PROTECT)
     
+    @receiver(post_save, sender=PaymentDetails)
+    def create_payment_tagging(sender, instance, created, **kwargs):
+        if created:
+            PaymentTagging.objects.create(tag='PENDING', payment=instance, approver=instance.auth_agent)
+
+    @receiver(post_save, sender=PaymentDetails)
+    def save_payment_tagging(sender, instance, **kwargs):
+        # instance.save() # stackoverflow
+        pass
+        
