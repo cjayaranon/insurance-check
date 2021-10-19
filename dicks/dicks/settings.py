@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'formtools',
     'crispy_forms',
     'approver',
+    'reader',
 ]
 
 MIDDLEWARE = [

@@ -1,7 +1,15 @@
+$app-version: 'v1.2';
+
 main {
     margin-top: 10vw;
 }
 
 footer {
     margin-top: 10vw;
+}
+
+.app-version {
+    &:before {
+        content: $app-version;
+    }
 }

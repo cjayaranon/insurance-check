@@ -15,8 +15,8 @@
                 Payments <i class="far fa-caret-square-down fa-sm"></i>
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="paymentsdropdown">
-                    <li> <a class="dropdown-item">Pending</a> </li>
-                    <li> <a class="dropdown-item">Approved</a> </li>
+                    <li> <a href="{% url 'reader-pendings' %}" class="dropdown-item">Pending</a> </li>
+                    <li> <a href="{% url 'reader-approved' %}"class="dropdown-item">Approved</a> </li>
                     <li> <a class="dropdown-item">Cancelled</a> </li>
                 </ul>
             </li>
