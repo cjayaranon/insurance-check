@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    {% block pagetitle %}
+        {% if call_name == 'pending-payments' %}
+            <title>Pending Payments</title>
+        {% elif call_name  == 'approved-payments' %}
+            <title>Approved Payments</title>
+        {% elif call_name == 'cancelled-payments' %}
+            <title>Cancelled Payments</title>
+        {% endif %}
+        
+    {% endblock pagetitle %}
+    
+    <div class="container">
+        <div class="row">
+            <div class="title text-center">
+                {% if call_name == 'pending-payments' %}
+                    <h3 class="h3">Pending Payments</h3>
+                {% elif call_name  == 'approved-payments' %}
+                    <h3 class="h3">Approved Payments</h3>
+                {% elif call_name == 'cancelled-payments' %}
+                    <h3 class="h3">Cancelled Payments</h3>
+                {% endif %}
+            </div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Payor</th>
+                        {% if call_name == 'pending-payments' %}
+                            <th>Date of Payment</th>
+                        {% elif call_name  == 'approved-payments' %}
+                            <th>Date of Approval</th>
+                        {% elif call_name == 'cancelled-payments' %}
+                            <th>Date of Cancellation</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for items in query_list %}
+                        <tr>
+                            <td>{{ items.payment.payor }}</td>
+                            <td>{{ items.payment.date_of_payment }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

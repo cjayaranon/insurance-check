@@ -11,7 +11,17 @@
         {% else %}
             <li> <a href="{% url 'home' %}" class="nav-link px-2 link-dark">Home</a> </li>
             <li><a href="{% url 'encode' %}" class="nav-link px-2 link-dark">New</a></li>
-            <li><a href="{% url 'logout' %}" class="nav-link px-2 link-dark">Log Out</a></li>
+            <li> <a href="#" class="nav-link px-2 link-dark" id="paymentsdropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Payments <i class="far fa-caret-square-down fa-sm"></i>
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="paymentsdropdown">
+                    <li> <a href="{% url 'reader-pendings' %}" class="dropdown-item">Pending</a> </li>
+                    <li> <a href="{% url 'reader-approved' %}"class="dropdown-item">Approved</a> </li>
+                    <li> <a class="dropdown-item">Cancelled</a> </li>
+                </ul>
+            </li>
+                
+            <li><a href="{% url 'logout' %}" class="nav-link btn btn-outline-danger btn-sm logout-button link-dark">Log Out</a></li>
         {% endif %}
     </ul>
 

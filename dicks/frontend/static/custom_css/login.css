@@ -1,0 +1,13 @@
+main {
+  margin-top: 10vw;
+}
+
+footer {
+  margin-top: 10vw;
+}
+
+.app-version:before {
+  content: "v1.2";
+}
+
+/*# sourceMappingURL=login.css.map */
