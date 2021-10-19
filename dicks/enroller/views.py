@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render
@@ -98,6 +99,7 @@ class BioEncodeFormPreview(FormPreview):
     def done(self, request, cleaned_data):
         data = Client(**cleaned_data)
         data.save()
+        messages.success(request, 'Client successfully saved.')
         return HttpResponseRedirect(reverse('home'))
         
         
@@ -145,5 +147,6 @@ class PaymentDetailsFormPreview(FormPreview):
     
     def done(self, request, cleaned_data):
         data = PaymentDetails(**cleaned_data)
+        messages.success(request, 'Payment is set to pending and saved. Please contact your Branch Manager for payment approval.')
         data.save()
         return HttpResponseRedirect(reverse('home'))
