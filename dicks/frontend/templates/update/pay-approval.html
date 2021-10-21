@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+{% block pagetitle %}<title>Approving Client</title>{% endblock pagetitle %}
+<div class="container">
+    <div class="row">
+        <h3 class="h3 text-center">Pending Payments</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Payor</th>
+                    <th>Payment Date</th>
+                    <th>Premium Paid</th>
+                    <th>Agent</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for items in query_list %}
+                    <tr>
+                        <td>{{ items.payment.payor }}</td>
+                        <td>{{ items.payment.date_of_payment }}</td>
+                        <td>{{ items.payment.premium_paid }}</td>
+                        <td>{{ items.payment.auth_agent }}</td>
+                        <td><a href="{% url 'pay-approve-view' items.payment.id items.id %}" class="nav-link btn btn-outline-primary btn-sm link-dark view-button">View</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,44 @@
+<td>payor</td>
+<td>encoder_branch</td>
+<td>membership_branch</td>
+<td>{{items.date_of_payment}}</td>
+<td>{{items.recording_date}}</td>
+<td>{{items.update_date}}</td>
+<td>{{items.cutoff_period}}</td>
+<td>{{items.premium_paid}}</td>
+<td>{{items.auth_agent}}</td>
+<td>{{items.payment_type}}</td>
+<td>{{items.tagging}}</td>
+<td>{{items.beneficiary1}}</td>
+<td>{{items.beneficiary2}}</td>
+
+{% for labels in label_list  %}
+    <tr>
+        <th>{{ labels }}</th>
+    {# </tr> #}
+{% endfor %}
+{% for items in info_list %}
+    {# <tr> #}
+        <td>{{ items.update_date }}</td>
+    </tr>
+{% endfor %}
+
+payor
+encoder_branch
+membership_branch
+date_of_payment
+recording_date
+update_date
+cutoff_period
+premium_paid
+auth_agent
+payment_type
+tagging
+beneficiary1
+beneficiary2
+
+<ul class="dropdown-menu text-small" aria-labelledby="paymentsdropdown">
+    <li> <a class="dropdown-item">Pending</a> </li>
+    <li> <a class="dropdown-item">Approved</a> </li>
+    <li> <a class="dropdown-item">Cancelled</a> </li>
+</ul>

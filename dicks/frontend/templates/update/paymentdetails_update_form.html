@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% block pagetitle %}<title>Approve or Cancel</title>{% endblock pagetitle %}
+
+<div class="container">
+    <div class="row">
+        <table class="table table-sm table-striped">
+            <tbody>
+                {% for labels, items in full_list %}
+                <tr>
+                    <th>{{labels}}</th>
+                    <td>{{items}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        &nbsp;
+        <div class="container">
+            <div class="row">
+                <form class="" action="" method="post">
+                    {% csrf_token %}
+                    <div class="position-relative">
+                        <div class="position-absolute top-100 start-50 translate-middle mt-20">
+                            <button class="btn btn-success btn-sm" type="submit" name="approve" value="approve">Approve</button>
+                            &nbsp;
+                            <button class="btn btn-outline-danger btn-sm" type="submit" name="cancel" value="cancel">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
