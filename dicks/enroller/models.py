@@ -122,7 +122,7 @@ class CutoffPeriod(models.Model):
     
 class ClientTagging(models.Model):
     tag_name = models.CharField(max_length=32)
-    tag_description = models.CharField(max_length=32)
+    tag_description = models.CharField(max_length=128)
     
     
     def __str__(self):
@@ -163,7 +163,8 @@ class PaymentTagging(models.Model):
     PAY_TAG = (
         ('APPROVE', 'Approved'),
         ('CANCEL', 'Cancelled'),
-        ('PENDING', 'Pending')
+        ('PENDING', 'Pending'),
+        ('DISC', 'Discontinued')
     )
     tag = models.CharField(max_length=10, choices=PAY_TAG)
     approver = models.ForeignKey(Agent, on_delete=models.PROTECT)

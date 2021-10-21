@@ -12,3 +12,10 @@
         color: color.$ghost-white;
     }
 }
+
+.view-button {
+    width: 8vw;
+    &:hover {
+        color: color.$ghost-white;
+    }
+}
