@@ -10,4 +10,11 @@
   color: #F8F8FF;
 }
 
-/*# sourceMappingURL=header.css.map */
+.view-button {
+  width: 8vw;
+}
+.view-button:hover {
+  color: #F8F8FF;
+}
+
+/*# sourceMappingURL=base.css.map */

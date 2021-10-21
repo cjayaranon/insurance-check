@@ -27,6 +27,7 @@
                 <thead>
                     <tr>
                         <th>Payor</th>
+                        <th>Amount</th>
                         {% if call_name == 'pending-payments' %}
                             <th>Date of Payment</th>
                         {% elif call_name  == 'approved-payments' %}
@@ -40,7 +41,11 @@
                     {% for items in query_list %}
                         <tr>
                             <td>{{ items.payment.payor }}</td>
+                            <td>{{ items.payment.premium_paid }}</td>
                             <td>{{ items.payment.date_of_payment }}</td>
+                            {% if call_name == 'pending-payments' %}
+                                <td><a href="{% url 'edit-pending' items.payment.pk %}" class="nav-link btn btn-outline-primary btn-sm link-dark">Edit</a></td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>

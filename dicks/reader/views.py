@@ -4,6 +4,7 @@ from enroller.models import PaymentTagging
 # Create your views here.
 
 
+
 class PendingPayments(generic.TemplateView):
     model = PaymentTagging
     template_name = 'read/payments-view.html'
@@ -24,4 +25,16 @@ class ApprovedPayments(generic.TemplateView):
     
     def get(self, request, *args, **kwargs):
         query_list = self.model.objects.filter(tag='APPROVE')
+        return render(request, self.template_name, {'query_list':query_list, 'call_name':self.call_name})
+        
+        
+        
+class CancelledPayments(generic.TemplateView):
+    model = PaymentTagging
+    template_name = 'read/payments-view.html'
+    call_name = 'cancelled-payments'
+    
+    
+    def get(self, request, *args, **kwargs):
+        query_list = self.model.objects.filter(tag='CANCEL')
         return render(request, self.template_name, {'query_list':query_list, 'call_name':self.call_name})
