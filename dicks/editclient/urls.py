@@ -1,6 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.urls import path
-from . import views
+from .views import *
 
 urlpatterns = [
-    path('<slug:pk>/', views.EditClientDetails.as_view(), name='edit-client'),
+    path('<pk>/edit-pending/', login_required(EditPendingPayments.as_view()), name = 'edit-pending'),
+    path('<slug:pk>/', login_required(EditClientDetails.as_view()), name='edit-client'),
 ]

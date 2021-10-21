@@ -4,6 +4,7 @@ from enroller.models import PaymentTagging
 # Create your views here.
 
 
+
 class PendingPayments(generic.TemplateView):
     model = PaymentTagging
     template_name = 'read/payments-view.html'
