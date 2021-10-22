@@ -1,0 +1,21 @@
+@use 'colors' as color;
+
+body {
+    background-image: url('/static/altumcode-P2SkP_PXhlU-unsplash.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+}
+
+.custom-text {
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 4vw;
+    background-color: transparentize(color.$ghost-white, 0.9);
+    color: color.$ghost-white;
+}
+
+.custom-footer {
+    @extend .custom-text;
+    color: color.$ghost-white !important;
+}
