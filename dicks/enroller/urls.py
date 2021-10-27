@@ -4,7 +4,7 @@ from .forms import *
 from .views import *
 
 urlpatterns = [
-    path('', login_required(HomeView.as_view()), name='home'),
+    path('', login_required(HomeView.as_view()), name='marketing-home'),
     path('search/<str:searchtext>/', login_required(SearchView.as_view()), name='search'),
     path('bio-encode/', login_required(BioEncodeView.as_view()), name='encode'),
     path('bio-encode/preview/', login_required(BioEncodeFormPreview(BioEncodeForm)), name='encode-preview'),
