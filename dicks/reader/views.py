@@ -60,8 +60,8 @@ class OwnBranchSalesFormPreview(FormPreview):
     def done(self, request, cleaned_data):
         print(cleaned_data)
         # GET records from db (go thru PaymentTagging to access PaymentDetails)
-        query_list = PaymentTagging.objects.filter(payment__date_of_payment__range = [cleaned_data['from_date'], cleaned_data['to_date']]).values_list('id', flat = True)
-        # query_list = PaymentDetails.objects.filter(date_of_payment__range = [cleaned_data['from_date'], cleaned_data['to_date']])
+        query_list = PaymentTagging.objects.filter(tag = 'APPROVE', payment__date_of_payment__range = [cleaned_data['from_date'], cleaned_data['to_date']]).values_list('id', flat = True)
+        print(query_list)
         # pass results to view
         date_range = list((str(cleaned_data['from_date']), str(cleaned_data['to_date'])))
         request.session['generated_report'] = list(query_list)
@@ -77,13 +77,27 @@ class OwnBranchSalesResultsView(generic.TemplateView):
     
     def get(self, request, *args, **kwargs):
         query_list = request.session.get('generated_report')
-        result_list = []
+        result_list = []    # contains PaymentTagging objects
+        all_sales = []  # contains all payments as int/str
+        amounts_list = []   # contains list of unique payment values
+        sales = []
+        totals_list = dict()
+        
         for items in query_list:
-            result_list.append(PaymentTagging.objects.get(id=items))
+            query_object = PaymentTagging.objects.get(id=items)
+            result_list.append(query_object)    
+            all_sales.append(str(query_object.payment.premium_paid))
+            amounts_list = set(all_sales)
+            sales = {name:all_sales.count(name) for name in amounts_list}
+            
+        for items in sales:
+        	totals_list[items] = float(items)*sales[items]
+
+        total = sum(totals_list.values())
+        
         browser_details = list((
             request.META['REMOTE_ADDR'],
             request.META['HTTP_HOST'],
             request.META['HTTP_SEC_CH_UA'],
             request.META['OS']))
-        print(request.session.get('date_range'))
-        return render(request, self.template_name, {'result_list':result_list, 'browser_details':browser_details})
+        return render(request, self.template_name, {'result_list':result_list, 'total_sales':total, 'browser_details':browser_details})
