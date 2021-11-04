@@ -58,10 +58,13 @@ class OwnBranchSalesFormPreview(FormPreview):
     '''
     
     def done(self, request, cleaned_data):
-        print(cleaned_data)
+        # GET user branch_name to filter encoder_branch sales only
         # GET records from db (go thru PaymentTagging to access PaymentDetails)
-        query_list = PaymentTagging.objects.filter(tag = 'APPROVE', payment__date_of_payment__range = [cleaned_data['from_date'], cleaned_data['to_date']]).values_list('id', flat = True)
-        print(query_list)
+        query_list = PaymentTagging.objects.filter(
+            tag = 'APPROVE',
+            payment__encoder_branch = request.user.agent.branch,
+            payment__date_of_payment__range = [cleaned_data['from_date'],
+            cleaned_data['to_date']]).values_list('id', flat = True)
         # pass results to view
         date_range = list((str(cleaned_data['from_date']), str(cleaned_data['to_date'])))
         request.session['generated_report'] = list(query_list)

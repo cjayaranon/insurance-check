@@ -47,6 +47,8 @@
             <p class="nav-link px-2 mt-2 link-dark d-print-none">
                 {% if user.agent %}
                     {{ user.agent.designation }}
+                    <br>
+                    {{ user.agent.branch }}
                 {% else %}
                     Not Logged In
                 {% endif %}
