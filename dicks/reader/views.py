@@ -16,7 +16,10 @@ class PendingPayments(generic.TemplateView):
     
     
     def get(self, request, *args, **kwargs):
-        query_list = self.model.objects.filter(tag='PENDING')
+        query_list = self.model.objects.filter(
+            tag='PENDING',
+            payment__encoder_branch = request.user.agent.branch,
+        )
         return render(request, self.template_name, {'query_list':query_list, 'call_name':self.call_name})
         
         
@@ -28,7 +31,10 @@ class ApprovedPayments(generic.TemplateView):
     
     
     def get(self, request, *args, **kwargs):
-        query_list = self.model.objects.filter(tag='APPROVE')
+        query_list = self.model.objects.filter(
+            tag='APPROVE',
+            payment__encoder_branch = request.user.agent.branch,
+        )
         return render(request, self.template_name, {'query_list':query_list, 'call_name':self.call_name})
         
         
@@ -40,7 +46,10 @@ class CancelledPayments(generic.TemplateView):
     
     
     def get(self, request, *args, **kwargs):
-        query_list = self.model.objects.filter(tag='CANCEL')
+        query_list = self.model.objects.filter(
+            tag='CANCEL',
+            payment__encoder_branch = request.user.agent.branch,
+        )
         return render(request, self.template_name, {'query_list':query_list, 'call_name':self.call_name})
         
         
