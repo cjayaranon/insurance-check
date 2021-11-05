@@ -10,7 +10,7 @@ class ClientAdmin(admin.ModelAdmin):
     
     
 class PaymentDetailsAdmin(admin.ModelAdmin):
-    list_display = ['payor', 'date_of_payment', 'premium_paid', 'auth_agent']
+    list_display = ['payor', 'id', 'date_of_payment', 'premium_paid', 'auth_agent', 'encoder_branch']
     
     
     

@@ -15,7 +15,10 @@ class BMapprove(generic.TemplateView):
     
     def get(self, request, *args, **kwargs):
         # modify to fetch only PaymentDetails tagged as pending thru PaymentTagging
-        query_list = PaymentTagging.objects.filter(tag='PENDING')
+        query_list = PaymentTagging.objects.filter(
+            tag='PENDING',
+            payment__encoder_branch = request.user.agent.branch,
+        )
         
         return render(request, self.template_name, {'query_list':query_list})
         

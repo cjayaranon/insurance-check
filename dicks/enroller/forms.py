@@ -1,5 +1,9 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, DateInput
 from .models import *
+
+
+class DateInput(DateInput):
+    input_type = 'date'
 
 
 
@@ -33,6 +37,10 @@ class PaymentDetailsForm(ModelForm):
         super(PaymentDetailsForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
+            
+        # self.fields['date_of_payment'].widget.attrs = {
+        #     'class': 'form-control datetime-input',
+        # }
     class Meta:
         
         model = PaymentDetails
@@ -48,3 +56,6 @@ class PaymentDetailsForm(ModelForm):
             # 'beneficiary1',
             # 'beneficiary2'
         # ]
+        widgets = {
+            'date_of_payment': DateInput()
+        }

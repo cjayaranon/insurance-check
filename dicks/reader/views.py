@@ -16,7 +16,10 @@ class PendingPayments(generic.TemplateView):
     
     
     def get(self, request, *args, **kwargs):
-        query_list = self.model.objects.filter(tag='PENDING')
+        query_list = self.model.objects.filter(
+            tag='PENDING',
+            payment__encoder_branch = request.user.agent.branch,
+        )
         return render(request, self.template_name, {'query_list':query_list, 'call_name':self.call_name})
         
         
@@ -28,7 +31,10 @@ class ApprovedPayments(generic.TemplateView):
     
     
     def get(self, request, *args, **kwargs):
-        query_list = self.model.objects.filter(tag='APPROVE')
+        query_list = self.model.objects.filter(
+            tag='APPROVE',
+            payment__encoder_branch = request.user.agent.branch,
+        )
         return render(request, self.template_name, {'query_list':query_list, 'call_name':self.call_name})
         
         
@@ -40,7 +46,10 @@ class CancelledPayments(generic.TemplateView):
     
     
     def get(self, request, *args, **kwargs):
-        query_list = self.model.objects.filter(tag='CANCEL')
+        query_list = self.model.objects.filter(
+            tag='CANCEL',
+            payment__encoder_branch = request.user.agent.branch,
+        )
         return render(request, self.template_name, {'query_list':query_list, 'call_name':self.call_name})
         
         
@@ -58,10 +67,13 @@ class OwnBranchSalesFormPreview(FormPreview):
     '''
     
     def done(self, request, cleaned_data):
-        print(cleaned_data)
+        # GET user branch_name to filter encoder_branch sales only
         # GET records from db (go thru PaymentTagging to access PaymentDetails)
-        query_list = PaymentTagging.objects.filter(tag = 'APPROVE', payment__date_of_payment__range = [cleaned_data['from_date'], cleaned_data['to_date']]).values_list('id', flat = True)
-        print(query_list)
+        query_list = PaymentTagging.objects.filter(
+            tag = 'APPROVE',
+            payment__encoder_branch = request.user.agent.branch,
+            payment__date_of_payment__range = [cleaned_data['from_date'],
+            cleaned_data['to_date']]).values_list('id', flat = True)
         # pass results to view
         date_range = list((str(cleaned_data['from_date']), str(cleaned_data['to_date'])))
         request.session['generated_report'] = list(query_list)

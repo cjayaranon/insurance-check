@@ -5,7 +5,6 @@
         <title>Reports</title>
     {% endblock pagetitle %}
     <div class="container">
-        {# <div class="row custom-row"> #}
         <div class="row position-absolute top-50 start-50 translate-middle">
             <div class="title text-center">
                 {# add if-else for HO access #}
@@ -20,12 +19,7 @@
                                 <label for="from_date">From:</label>
                             </td>
                             <td>
-                                <div class="input-group date" id="datepicker1" data-target-input="nearest">
-                                    <input type="text" name="from_date" class=" form-control datetimepicker-input" data-target="datepicker1" required="" id="id_from_date" value="{{ from_date }}">
-                                    <div class="input-group-append" data-target="#datepicker1" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
+                                {{ form.from_date }}
                             </td>
                         </tr>
                         <tr>
@@ -33,14 +27,7 @@
                                 <label for="to_date">To:</label>
                             </td>
                             <td>
-                                <div class="input-group date" id='datepicker2' data-target-input="nearest">
-                                    <input type="text" name="to_date" class=" form-control datetimepicker-input" data-target="datepicker2" required="" id="id_from_date" value="{{ to_date }}">
-                                    <div class="input-group-append" data-target='#datepicker2' data-toggle='datetimepicker'>
-                                        <div class="input-group-text">
-                                            <i class="fa fa-calendar"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                                {{ form.to_date }}
                             </td>
                         </tr>
                         <tr>

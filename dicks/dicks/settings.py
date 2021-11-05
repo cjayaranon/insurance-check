@@ -124,9 +124,9 @@ USE_TZ = True
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-# DATE_FORMAT = '%b %d %Y'
+DATE_FORMAT = '%m %d %Y'
 
-# DATE_INPUT_FORMATS = ['%b %d %Y']
+DATE_INPUT_FORMATS = ['%m %d %Y']
 
 
 # Static files (CSS, JavaScript, Images)
