@@ -104,3 +104,81 @@ class OwnBranchSalesResultsView(generic.TemplateView):
             request.META['HTTP_SEC_CH_UA'],
             request.META['OS']))
         return render(request, self.template_name, {'result_list':result_list, 'total_sales':total, 'browser_details':browser_details})
+        
+        
+        
+class OverallBranchSales(generic.FormView):
+    # model = PaymentTagging
+    template_name = 'read/overall-sales-home.html'
+    form_class = OverallReportGenerateForm
+    success_url = '/approver/'
+
+
+
+class OverallSalesFormPreview(FormPreview):
+    '''
+    preview of from_date and to_date
+    GET PaymentDetails thru PaymentTagging based on choice in report_format
+    '''
+    
+    def done(self, request, cleaned_data):
+        # GET records from db (go thru PaymentTagging to access PaymentDetails)
+        report_format = cleaned_data['report_format']
+        query_list = []
+        if report_format == 'OVERALL':
+            query_list = PaymentTagging.objects.filter(
+                tag = 'APPROVE',
+                payment__date_of_payment__range = [cleaned_data['from_date'],
+                cleaned_data['to_date']]).values_list('id', flat = True)
+            # pass results to view
+        elif report_format == 'PREMIUM':
+            print('<----PREMIUM---->')
+            pass
+        elif report_format == 'HO-ARD':
+            print('<----HO-ARD---->')
+            pass
+        else:
+            print('<----NO SUCH FORMAT---->')
+        date_range = list((str(cleaned_data['from_date']), str(cleaned_data['to_date'])))
+        request.session['generated_report'] = list(query_list)
+        request.session['date_range'] = date_range
+        request.session['report_format'] = report_format
+        # change to results viewing
+        return HttpResponseRedirect(reverse('overall-sales-viewing'))
+        
+        
+        
+class OverallSalesResultsView(generic.TemplateView):
+    '''
+    Display of Sales Report in HO/ARD view
+    '''
+    template_name = 'read/sales-view.html'
+    
+    
+    def get(self, request, *args, **kwargs):
+        query_list = request.session.get('generated_report')
+        result_list = []    # contains PaymentTagging objects
+        all_sales = []  # contains all payments as int/str
+        amounts_list = []   # contains list of unique payment values
+        sales = []
+        totals_list = dict()
+        
+        for items in query_list:
+            query_object = PaymentTagging.objects.get(id=items)
+            result_list.append(query_object)    
+            all_sales.append(str(query_object.payment.premium_paid))
+            amounts_list = set(all_sales)
+            sales = {name:all_sales.count(name) for name in amounts_list}
+            
+        for items in sales:
+        	totals_list[items] = float(items)*sales[items]
+
+        total = sum(totals_list.values())
+        
+        browser_details = list((
+            request.META['REMOTE_ADDR'],
+            request.META['HTTP_HOST'],
+            request.META['HTTP_SEC_CH_UA'],
+            request.META['OS']))
+        return render(request, self.template_name, {'result_list':result_list, 'total_sales':total, 'browser_details':browser_details})
+        
