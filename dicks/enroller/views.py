@@ -36,15 +36,14 @@ class HomeView(generic.TemplateView):
     landing page after login
     contains search
     add get function to facilitate redirection if user == Branch Manager | user == Branch Marketing
+    this class by default belongs to Branch Marketing
     '''
-    template_name = 'create/search.html'
+    template_name = 'read/search.html'
     
     def get(self, request, *args, **kwargs):
         if request.user.agent.designation.designation_name == 'Branch Manager':
-            print('<----BM---->')
             return HttpResponseRedirect(reverse('pay-approver-home'))
         else:
-            print(request.user.agent.designation)
             return render(request, self.template_name, {})
             
             
@@ -55,7 +54,7 @@ class HomeView(generic.TemplateView):
 
     
 class SearchView(generic.TemplateView):
-    template_name = 'create/search.html'
+    template_name = 'read/search.html'
     
     def get(self, request, *args, **kwargs):
         query = kwargs['searchtext']
