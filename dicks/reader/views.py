@@ -111,7 +111,8 @@ class OwnBranchSalesResultsView(generic.TemplateView):
             request.META['REMOTE_ADDR'],
             request.META['HTTP_HOST'],
             request.META['HTTP_SEC_CH_UA'],
-            request.META['OS']))
+            # request.META['OS']
+            ))
         return render(request, self.template_name, {'result_list':result_list, 'total_sales':total, 'browser_details':browser_details})
         
         
