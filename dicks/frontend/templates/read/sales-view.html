@@ -10,7 +10,12 @@
     <div class="container">
         <div class="row">
             <h3 class="h3 text-center d-none d-print-block">Diamond Insurance</h3>
-            <h3 class="h3 text-center">Sales Report</h3>
+            {% if user.agent.designation.designation_name == "Branch Manager" %}
+                <h3 class="h3 text-center">Sales Report</h3>
+            {% elif user.agent.designation.designation_name == "IT Admin" or user.agent.designation.designation_name == "HO-Marketing Staff" %}
+                <h3 class="h3 text-center">Overall Sales Report</h3>
+            {% endif %}
+            
             <h4 class="h4 text-center text-muted">
                 as of {{ request.session.date_range.0 }} to {{ request.session.date_range.1 }}
             </h4>
