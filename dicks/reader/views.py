@@ -23,6 +23,11 @@ class PendingPayments(generic.TemplateView):
         return render(request, self.template_name, {'query_list':query_list, 'call_name':self.call_name})
         
         
+    def post(self, request, *args, **kwargs):
+        if 'searchtext' in request.POST:
+            return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
+        
+        
         
 class ApprovedPayments(generic.TemplateView):
     model = PaymentTagging
@@ -38,6 +43,11 @@ class ApprovedPayments(generic.TemplateView):
         return render(request, self.template_name, {'query_list':query_list, 'call_name':self.call_name})
         
         
+    def post(self, request, *args, **kwargs):
+        if 'searchtext' in request.POST:
+            return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
+        
+        
         
 class CancelledPayments(generic.TemplateView):
     model = PaymentTagging
@@ -51,6 +61,11 @@ class CancelledPayments(generic.TemplateView):
             payment__encoder_branch = request.user.agent.branch,
         )
         return render(request, self.template_name, {'query_list':query_list, 'call_name':self.call_name})
+        
+        
+    def post(self, request, *args, **kwargs):
+        if 'searchtext' in request.POST:
+            return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
         
         
         
@@ -111,7 +126,8 @@ class OwnBranchSalesResultsView(generic.TemplateView):
             request.META['REMOTE_ADDR'],
             request.META['HTTP_HOST'],
             request.META['HTTP_SEC_CH_UA'],
-            request.META['OS']))
+            # request.META['OS']
+            ))
         return render(request, self.template_name, {'result_list':result_list, 'total_sales':total, 'browser_details':browser_details})
         
         
@@ -188,6 +204,7 @@ class OverallSalesResultsView(generic.TemplateView):
             request.META['REMOTE_ADDR'],
             request.META['HTTP_HOST'],
             request.META['HTTP_SEC_CH_UA'],
-            # request.META['OS']))
+            # request.META['OS']
+            ))
         return render(request, self.template_name, {'result_list':result_list, 'total_sales':total, 'browser_details':browser_details})
         
