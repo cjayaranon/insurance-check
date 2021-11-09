@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.urls import include, path
+from .views import *
 
 urlpatterns = [
     path('reader/', include('reader.urls')),
@@ -25,4 +26,5 @@ urlpatterns = [
     path('enroller/', include('enroller.urls')),
     path('batchupload/', include('batchupload.urls')),
     path('admin/', admin.site.urls),
+    # path('503/', Test503.as_view())
 ]

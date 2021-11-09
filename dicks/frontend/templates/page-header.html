@@ -4,7 +4,11 @@
         {# <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg> #}
         <img src="{% static 'ampc-logo-high-res.png' %}" height="40vw" alt="" class="bi me-2">
     </a>
-    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+    <div class="text-center d-none d-print-block">
+        <h3 class="h3">Agdao Multipurpose Cooperative</h3>
+        <p>{{ request.user.agent.branch }} Branch</p>
+    </div>
+    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 d-print-none">
         {% if user.agent.designation.designation_name == "Branch Manager" %}
             <li> <a href="{% url 'pay-approver-home' %}" class="nav-link px-2 link-dark">Home</a> </li>
             <li>
@@ -16,9 +20,9 @@
                     <li> <a href="{% url 'reader-cancelled' %}"class="dropdown-item">Cancelled</a> </li>
                 </ul>
             </li>
-            <li><a href="{% url 'pay-approver-home' %}" class="nav-link px-2 link-dark">Reports</a></li>
+            <li><a href="{% url 'reports-home' %}" class="nav-link px-2 link-dark">Reports</a></li>
         {% else %}
-            <li> <a href="{% url 'home' %}" class="nav-link px-2 link-dark">Home</a> </li>
+            <li> <a href="{% url 'marketing-home' %}" class="nav-link px-2 link-dark">Home</a> </li>
             <li><a href="{% url 'encode' %}" class="nav-link px-2 link-dark">New</a></li>
             <li> <a class="nav-link px-2 link-dark" id="paymentsdropdown2" data-bs-toggle="dropdown" aria-expanded="false">
                 Payments <i class="far fa-caret-square-down fa-sm"></i>
@@ -33,16 +37,18 @@
         <li><a href="{% url 'logout' %}" class="nav-link px-2 btn btn-outline-danger btn-sm logout-button link-dark">Log Out</a></li>
     </ul>
 
-    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="" method="post">
+    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-print-none" action="" method="post">
         {% csrf_token %}
         <input type="search" class="form-control" name="searchtext" placeholder="Search..." aria-label="Search">
     </form>
 
     <div class="text-end">
         <a href="#" class="d-block link-dark text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <p class="nav-link px-2 mt-2 link-dark">
+            <p class="nav-link px-2 mt-2 link-dark d-print-none">
                 {% if user.agent %}
                     {{ user.agent.designation }}
+                    <br>
+                    {{ user.agent.branch }}
                 {% else %}
                     Not Logged In
                 {% endif %}

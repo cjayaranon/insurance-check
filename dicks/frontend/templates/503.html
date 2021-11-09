@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        {% load static %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        {% block css %}
+        <!--Custom styles for this template-->
+        <link
+          rel="icon"
+          href="{% static 'ampc-logo-high-res.png' %}"
+          height="100"
+          width="100"
+        />
+        <link rel="stylesheet" href="{% static 'custom_css/error-pages.css' %}">
+        {% endblock %}
+        <title>AGDAO COOP | Page not found</title>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 custom-text">
+                    
+                    <h1><i class="fas fa-exclamation-triangle fa-lg fa-fw"></i>Oh no, you've found our junior developer's homepage!</h1>
+                    <h4>Despite sleeping on the couch most of the day, our junior web developer still finds time to do some coding...</h3>
+                    <br></br>
+                    <code>ERROR 503 Service Unavailable</code>
+                </div>
+                <div class="custom-footer">
+                    {% include 'footer.html' %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,20 @@
+body {
+  background-image: url("/static/altumcode-P2SkP_PXhlU-unsplash.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+.custom-text, .custom-footer {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 4vw;
+  background-color: rgba(248, 248, 255, 0.1);
+  color: #F8F8FF;
+}
+
+.custom-footer {
+  color: #F8F8FF !important;
+}
+
+/*# sourceMappingURL=error-pages.css.map */

@@ -17,4 +17,12 @@
   color: #F8F8FF;
 }
 
+.custom-row {
+  max-width: 40vw;
+  margin-right: 10vw;
+}
+.custom-row .generate-button {
+  margin-top: 1vw;
+}
+
 /*# sourceMappingURL=base.css.map */

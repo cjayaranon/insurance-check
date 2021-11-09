@@ -19,3 +19,12 @@
         color: color.$ghost-white;
     }
 }
+
+.custom-row {
+    max-width: 40vw;
+    margin-right: 10vw;
+    
+    .generate-button {
+        margin-top: 1vw;
+    }
+}

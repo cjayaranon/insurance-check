@@ -26,7 +26,7 @@ class SearchMixin(object):
             iaccs_id__contains=query)
             
         # request.session['results_list'] = query_list
-        # return HttpResponseRedirect(reverse('home'))
+        # return HttpResponseRedirect(reverse('marketing-home'))
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -36,15 +36,14 @@ class HomeView(generic.TemplateView):
     landing page after login
     contains search
     add get function to facilitate redirection if user == Branch Manager | user == Branch Marketing
+    this class by default belongs to Branch Marketing
     '''
-    template_name = 'create/search.html'
+    template_name = 'read/search.html'
     
     def get(self, request, *args, **kwargs):
         if request.user.agent.designation.designation_name == 'Branch Manager':
-            print('<----BM---->')
             return HttpResponseRedirect(reverse('pay-approver-home'))
         else:
-            print(request.user.agent.designation)
             return render(request, self.template_name, {})
             
             
@@ -55,7 +54,7 @@ class HomeView(generic.TemplateView):
 
     
 class SearchView(generic.TemplateView):
-    template_name = 'create/search.html'
+    template_name = 'read/search.html'
     
     def get(self, request, *args, **kwargs):
         query = kwargs['searchtext']
@@ -100,7 +99,7 @@ class BioEncodeFormPreview(FormPreview):
         data = Client(**cleaned_data)
         data.save()
         messages.success(request, 'Client successfully saved.')
-        return HttpResponseRedirect(reverse('home'))
+        return HttpResponseRedirect(reverse('marketing-home'))
         
         
         
@@ -121,6 +120,7 @@ class PaymentEncodeView(generic.CreateView):
         form_class = PaymentDetailsForm(
             request.GET or None, initial={
                 'payor':client.id,
+                'encoder_branch':request.user.agent.branch,
                 'membership_branch':client.membership_branch,
                 'auth_agent':request.user.agent
                 }
@@ -149,4 +149,4 @@ class PaymentDetailsFormPreview(FormPreview):
         data = PaymentDetails(**cleaned_data)
         messages.success(request, 'Payment is set to pending and saved. Please contact your Branch Manager for payment approval.')
         data.save()
-        return HttpResponseRedirect(reverse('home'))
+        return HttpResponseRedirect(reverse('marketing-home'))

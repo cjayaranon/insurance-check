@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'maintenance_mode',
     'dicks',
     'enroller',
     'editclient',
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'maintenance_mode.middleware.MaintenanceModeMiddleware'
 ]
 
 ROOT_URLCONF = 'dicks.urls'
@@ -122,9 +124,9 @@ USE_TZ = True
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-# DATE_FORMAT = '%b %d %Y'
+DATE_FORMAT = '%m %d %Y'
 
-# DATE_INPUT_FORMATS = ['%b %d %Y']
+DATE_INPUT_FORMATS = ['%m %d %Y']
 
 
 # Static files (CSS, JavaScript, Images)
@@ -149,3 +151,4 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 
 LOGIN_REDIRECT_URL = '/enroller/'
 LOGOUT_REDIRECT_URL = '/login/'
+MAINTENANCE_MODE = None

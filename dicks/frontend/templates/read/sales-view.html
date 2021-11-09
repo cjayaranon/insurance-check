@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    {% block css %}
+        <link rel="stylesheet" href='{% static "custom_css/printing.css" %}' type="text/css" media='print'/>
+    {% endblock css %}
+    {% block pagetitle %}
+        <title>Sales Report</title>
+    {% endblock pagetitle %}
+    <div class="container">
+        <div class="row">
+            <h3 class="h3 text-center d-none d-print-block">Diamond Insurance</h3>
+            <h3 class="h3 text-center">Sales Report</h3>
+            <h4 class="h4 text-center text-muted">
+                as of {{ request.session.date_range.0 }} to {{ request.session.date_range.1 }}
+            </h4>
+            <div class="position-relative mt-20 pb-1 d-print-none">
+                <button class="btn btn-success btn-sm" type="submit" name="update-button" onclick="window.print();return false;">Print</button>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Payor</th>
+                        <th>Payment Date</th>
+                        <th>Membership Branch</th>
+                        <th>Premium Paid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for items in result_list %}
+                        <tr>
+                            <td>{{ items.payment.payor }}</td>
+                            <td>{{ items.payment.date_of_payment }}</td>
+                            <td>{{ items.payment.membership_branch }}</td>
+                            <td>{{ items.payment.premium_paid }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="table-secondary">
+                        <td colspan="3" class="text-center"><strong>TOTAL SALES</strong></td>
+                        <td>{{ total_sales }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="print-footer text-center d-none d-print-block">
+                <p>
+                    {% if user.agent %}
+                        {{ user.agent.designation }}
+                    {% else %}
+                        Not Logged In
+                    {% endif %}
+                    {% now "l, d M Y" %}
+                    
+                </p>
+                <p>{{ browser_details }}</p>
+                {# add PC details, time and date of printing #}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
