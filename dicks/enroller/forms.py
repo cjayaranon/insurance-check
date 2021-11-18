@@ -15,20 +15,24 @@ class BioEncodeForm(ModelForm):
     class Meta:
         
         model = Client
-        fields = [
-            'iaccs_id',
-            'membership_branch',
-            'first_name',
-            'middle_name',
-            'last_name',
-            'name_extension',
-            'address',
-            'gender',
-            'civil_status',
-            'birth_date',
-            'email',
-            'role'
-        ]
+        fields = '__all__'
+        # [
+            # 'iaccs_id',
+            # 'membership_branch',
+            # 'first_name',
+            # 'middle_name',
+            # 'last_name',
+            # 'name_extension',
+            # 'address',
+            # 'gender',
+            # 'civil_status',
+            # 'birth_date',
+            # 'email',
+            # 'role'
+        # ]
+        widgets = {
+            'birth_date': DateInput()
+        }
         
         
         
