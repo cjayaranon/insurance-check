@@ -28,9 +28,15 @@
                 {% for items in query_list %}
                     <tr>
                         <td>{{ items.membership_branch }}</td>
+                        {% if user.agent.designation.designation_name == 'Branch Manager' %}
+                        <td>
+                            {{ items.last_name }}, {{ items.first_name }} {{ items.middle_name }}
+                        </td>
+                        {% else %}
                         <td>
                             <a href="{% url 'edit-client' items.id %}">{{ items.last_name }}, {{ items.first_name }} {{ items.middle_name }}</a>
                         </td>
+                        {% endif %}
                         <td>{{ items.role }}</td>
                         <td>{{ items.iaccs_id }}</td>
                         <td>{{ items.birth_date }}</td>
@@ -43,10 +49,13 @@
                         {% empty %}
                         <td colspan="2">No Payments</td>
                         {% endfor %}
-                        
-                        <td>
-                            <a href="{% url 'pay-encode-details' items.id %}" class="nav-link btn btn-outline-primary btn-sm link-dark">Pay</a>
-                        </td>
+                        {% if user.agent.designation.designation_name == 'Branch Manager' %}
+                            <td></td>
+                        {% else %}
+                            <td>
+                                <a href="{% url 'pay-encode-details' items.id %}" class="nav-link btn btn-outline-primary btn-sm link-dark">Pay</a>
+                            </td>
+                        {% endif %}
                     </tr>
                 {% empty %}
                     {% if request.method == "GET" %}
