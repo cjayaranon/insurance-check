@@ -29,7 +29,7 @@
                     <tr>
                         <td>{{ items.membership_branch }}</td>
                         <td>
-                            <a href="{% url 'edit-client' items.id %}">{{ items.last_name }}, {{ items.first_name }} {{ items.middle_name }}</a>
+                            <a href="{% url 'edit-client' items.id %}">{{ items.last_name }}, {{ items.first_name }} {{ items.name_extension }} {{ items.middle_name }}</a>
                         </td>
                         <td>{{ items.role }}</td>
                         <td>{{ items.iaccs_id }}</td>
