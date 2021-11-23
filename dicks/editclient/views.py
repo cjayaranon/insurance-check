@@ -23,14 +23,10 @@ class EditClientDetails(generic.edit.UpdateView):
         #     visible.field.widget.attrs['class'] = 'form-control'
     
     def post(self, request, *args, **kwargs):
-        if 'searchtext' in request.POST:
-            return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
-        else:
-            messages.success(request, 'Client successfully edited')
-            return super(EditClientDetails, self).post(request, **kwargs)
+        messages.success(request, 'Client successfully edited')
+        return super(EditClientDetails, self).post(request, **kwargs)
             
     def form_valid(self, form):
-        
         return super(EditClientDetails, self).form_valid(form)
         
         
@@ -43,10 +39,6 @@ class EditPendingPayments(generic.UpdateView):
     
     def post(self, request, *args, **kwargs):
         call_name = 'edit-pending-payment'
-        
-        if 'searchtext' in request.POST:
-            return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
-        else:
-            messages.success(request, 'Payment updated successfully')
-            return super(EditClientDetails, self).post(request, **kwargs)
+        messages.success(request, 'Payment updated successfully')
+        return super(EditClientDetails, self).post(request, **kwargs)
     
