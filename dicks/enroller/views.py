@@ -57,7 +57,7 @@ class SearchView(generic.TemplateView):
     template_name = 'read/search.html'
     
     def get(self, request, *args, **kwargs):
-        query = kwargs['searchtext']
+        query = request.GET['searchtext']
         
         client_list = Client.objects.filter(
             last_name__contains=query
@@ -82,11 +82,8 @@ class BioEncodeView(generic.CreateView):
     template_name = 'create/bio-encode.html'
     
     def post(self, request, *args, **kwargs):
-        if 'searchtext' in request.POST:
-            return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
-        else:
-            url = reverse('encode-preview')
-            return HttpResponseRedirect(url)
+        url = reverse('encode-preview')
+        return HttpResponseRedirect(url)
         
         
         
@@ -134,12 +131,8 @@ class PaymentEncodeView(generic.CreateView):
         used for the search bar on top of the page
         '''
         template_name = 'create/payment-encode-details.html'
-
-        if 'searchtext' in request.POST:
-            return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
-        else:
-            url = reverse('pay-preview')
-            return HttpResponseRedirect(url)
+        url = reverse('pay-preview')
+        return HttpResponseRedirect(url)
         
         
         
