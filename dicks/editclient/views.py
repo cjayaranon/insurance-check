@@ -17,10 +17,6 @@ class EditClientDetails(generic.edit.UpdateView):
     template_name = 'update/edit-client_update_form.html'
     success_url = '/enroller/'
     
-    # def get_initial(self):
-    #     initial = super(EditClientDetails, self).get_initial()
-        # for visible in iter(self.fields):
-        #     visible.field.widget.attrs['class'] = 'form-control'
     
     def post(self, request, *args, **kwargs):
         messages.success(request, 'Client successfully edited')
@@ -32,13 +28,17 @@ class EditClientDetails(generic.edit.UpdateView):
         
         
 class EditPendingPayments(generic.UpdateView):
-    # model = PaymentTagging
     model = PaymentDetails
     template_name = 'update/edit-pending-payment.html'
     fields = '__all__'
+    success_url = '/enroller/'
     
     def post(self, request, *args, **kwargs):
-        call_name = 'edit-pending-payment'
+        # call_name = 'edit-pending-payment'
         messages.success(request, 'Payment updated successfully')
-        return super(EditClientDetails, self).post(request, **kwargs)
+        return super(EditPendingPayments, self).post(request, **kwargs)
+        
+        
+    def form_valid(self, form):
+        return super(EditPendingPayments, self).form_valid(form)
     
