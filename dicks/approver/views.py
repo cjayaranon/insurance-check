@@ -23,11 +23,6 @@ class BMapprove(generic.TemplateView):
         return render(request, self.template_name, {'query_list':query_list})
         
         
-    def post(self, request, *args, **kwargs):
-        if 'searchtext' in request.POST:
-            return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
-        
-        
         
 class ApproveView(generic.TemplateView):
     '''
@@ -77,9 +72,7 @@ class ApproveView(generic.TemplateView):
         
         
     def post(self, request, *args, **kwargs):
-        if 'searchtext' in request.POST:
-            return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
-        elif 'cancel' in request.POST:
+        if 'cancel' in request.POST:
             # edit tag to CANCEL in PaymentTagging then redirect to BM home with warning message
             model = PaymentTagging(pk=kwargs['pay_tag'], tag='CANCEL', approver=request.user.agent, payment=PaymentDetails.objects.get(pk=kwargs['pay_details']))
             model.save()

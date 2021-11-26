@@ -15,6 +15,7 @@ class EditClientDetails(generic.edit.UpdateView):
     # form_class = BioEncodeForm
     fields = '__all__'
     template_name = 'update/edit-client_update_form.html'
+    success_url = '/enroller/'
     
     # def get_initial(self):
     #     initial = super(EditClientDetails, self).get_initial()
@@ -22,14 +23,10 @@ class EditClientDetails(generic.edit.UpdateView):
         #     visible.field.widget.attrs['class'] = 'form-control'
     
     def post(self, request, *args, **kwargs):
-        if 'searchtext' in request.POST:
-            return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
-        else:
-            return super(EditClientDetails, self).post(request, **kwargs)
+        messages.success(request, 'Client successfully edited')
+        return super(EditClientDetails, self).post(request, **kwargs)
             
     def form_valid(self, form):
-        # clean = form.cleaned_data
-        # self.object = context.save(clean)
         return super(EditClientDetails, self).form_valid(form)
         
         
@@ -42,10 +39,6 @@ class EditPendingPayments(generic.UpdateView):
     
     def post(self, request, *args, **kwargs):
         call_name = 'edit-pending-payment'
-        
-        if 'searchtext' in request.POST:
-            return HttpResponseRedirect('/enroller/search/%s' % request.POST['searchtext'])
-        else:
-            messages.success(request, 'Payment updated successfully')
-            return super(EditClientDetails, self).post(request, **kwargs)
+        messages.success(request, 'Payment updated successfully')
+        return super(EditClientDetails, self).post(request, **kwargs)
     
