@@ -6,6 +6,11 @@ from import_export.admin import ImportExportMixin
 
 
 
+class ExportBranch(ImportExportMixin, admin.ModelAdmin):
+    list_display = ['branch_name', 'id']
+
+
+
 # basic import/export for PaymentDetails (payments by Mktg Staff)
 class ExportPaymentDetails(ImportExportMixin, admin.ModelAdmin):
     list_display = ['payor', 'id', 'date_of_payment', 'premium_paid', 'auth_agent', 'encoder_branch']
@@ -47,7 +52,8 @@ class PayTagDetailsAdmin(admin.ModelAdmin):
 admin.site.register(Role)
 # admin.site.register(Client, ClientAdmin)
 admin.site.register(Client, ExportClient)
-admin.site.register(Branch)
+# admin.site.register(Branch)
+admin.site.register(Branch, ExportBranch)
 admin.site.register(Designation)
 admin.site.register(Agent)
 admin.site.register(Credits)
